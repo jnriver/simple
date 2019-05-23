@@ -1,16 +1,5 @@
+require_relative 'DFA'
 require 'set'
-
-class FARule < Struct.new(:state, :character, :next_state)
-  def applies_to?(state, character)
-    self.state == state && self.character == character
-  end
-  def follow
-    next_state
-  end
-  def inspect
-    "#<FARule #{state.inspect} --#{character}--> #{next_state.inspect}>"
-  end
-end
 
 class NFARulebook < Struct.new(:rules)
   def next_states(states, character)
@@ -58,15 +47,15 @@ class NFADesign < Struct.new(:start_state, :accept_states, :rulebook)
   end
 end
 
-rulebook = NFARulebook.new([
-  FARule.new(1, nil, 2), FARule.new(1, nil, 4),
-  FARule.new(2, 'a', 3), FARule.new(3, 'a', 2),
-  FARule.new(4, 'a', 5), FARule.new(5, 'a', 6),
-  FARule.new(6, 'a', 4)
-])
+# rulebook = NFARulebook.new([
+#   FARule.new(1, nil, 2), FARule.new(1, nil, 4),
+#   FARule.new(2, 'a', 3), FARule.new(3, 'a', 2),
+#   FARule.new(4, 'a', 5), FARule.new(5, 'a', 6),
+#   FARule.new(6, 'a', 4)
+# ])
 
-nfa_design = NFADesign.new(1, [2, 4], rulebook)
+# nfa_design = NFADesign.new(1, [2, 4], rulebook)
 
-puts nfa_design.accepts?('aa')
-puts nfa_design.accepts?('aaa')
-puts nfa_design.accepts?('aaaaa')
+# puts nfa_design.accepts?('aa')
+# puts nfa_design.accepts?('aaa')
+# puts nfa_design.accepts?('aaaaa')
